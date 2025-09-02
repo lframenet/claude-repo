@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cymatics Resonance Lab - Main Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0f1f 100%);
+            color: #00ff00;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 2px solid #00ff00;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            text-shadow: 0 0 20px #00ff00;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #00ffaa;
+            font-size: 1.2em;
+        }
+
+        .main-container {
+            flex: 1;
+            padding: 40px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .portal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .portal-card {
+            background: rgba(0, 20, 40, 0.8);
+            border: 2px solid #00ff00;
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portal-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ff00, #00ffaa, #0088ff);
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: -1;
+        }
+
+        .portal-card:hover::before {
+            opacity: 1;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 0, 0.3);
+        }
+
+        .portal-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+            text-align: center;
+        }
+
+        .portal-title {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: #00ffaa;
+            text-align: center;
+        }
+
+        .portal-description {
+            color: #88ff88;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .portal-features {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .portal-features li {
+            padding: 5px 0;
+            color: #66ff66;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .portal-features li:before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #00ff00;
+        }
+
+        .status-bar {
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #00ff00;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .status-item {
+            text-align: center;
+        }
+
+        .status-label {
+            color: #00ffaa;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .status-value {
+            font-size: 1.8em;
+            color: #00ff00;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #00ff00, #00aa88);
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(0, 255, 0, 0.5);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #0088ff, #00ffaa);
+        }
+
+        .connection-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #00ff00;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .footer {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 1px solid #00ff00;
+            padding: 20px;
+            text-align: center;
+            color: #00ffaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>⟠ CYMATICS RESONANCE LAB ⟠</h1>
+        <div class="subtitle">Precision Frequency Analysis & Pattern Generation System</div>
+    </div>
+
+    <div class="main-container">
+        <div class="status-bar">
+            <div class="status-grid">
+                <div class="status-item">
+                    <div class="status-label">System Status</div>
+                    <div class="status-value" id="system-status">READY</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Audio Input</div>
+                    <div class="status-value" id="audio-status">INACTIVE</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">AI Agent</div>
+                    <div class="status-value" id="ai-status">OFFLINE</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">Database</div>
+                    <div class="status-value" id="db-status">CONNECTED</div>
+                </div>
+                <div class="status-item">
+                    <div class="status-label">GPU Accel</div>
+                    <div class="status-value" id="gpu-status">ENABLED</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="portal-grid">
+            <div class="portal-card" onclick="openPortal('core/index.html')">
+                <span class="portal-icon">◉</span>
+                <h2 class="portal-title">Pattern Generator</h2>
+                <p class="portal-description">
+                    Ultra-precise cymatic pattern visualization with NO SLIDERS.
+                    Direct numerical frequency input only.
+                </p>
+                <ul class="portal-features">
+                    <li>100+ simultaneous frequencies</li>
+                    <li>Up to 4096x4096 resolution</li>
+                    <li>WebGL GPU acceleration</li>
+                    <li>Quantum superposition mode</li>
+                </ul>
+            </div>
+
+            <div class="portal-card" onclick="openPortal('audio/audio-capture.html')">
+                <span class="portal-icon">🎧</span>
+                <h2 class="portal-title">Audio Analyzer</h2>
+                <p class="portal-description">
+                    Real-time frequency identification from microphone with 0.01 Hz precision.
+                </p>
+                <ul class="portal-features">
+                    <li>FFT analysis (32k samples)</li>
+                    <li>Harmonic detection</li>
+                    <li>Frequency logging database</li>
+                    <li>Musical note identification</li>
+                </ul>
+            </div>
+
+            <div class="portal-card" onclick="openPortal('ai-agent/pattern-ai.html')">
+                <span class="portal-icon">🤖</span>
+                <h2 class="portal-title">AI Pattern Analysis</h2>
+                <p class="portal-description">
+                    Local Ollama integration for pattern recognition. Zero token costs.
+                </p>
+                <ul class="portal-features">
+                    <li>Pattern classification</li>
+                    <li>Frequency suggestions</li>
+                    <li>Sacred geometry detection</li>
+                    <li>Completely offline</li>
+                </ul>
+            </div>
+
+            <div class="portal-card" onclick="openPortal('testing/test-runner.html')">
+                <span class="portal-icon">🔧</span>
+                <h2 class="portal-title">Testing Suite</h2>
+                <p class="portal-description">
+                    Comprehensive testing with automated "moron agent" chaos testing.
+                </p>
+                <ul class="portal-features">
+                    <li>Random interaction testing</li>
+                    <li>5x iteration cycles</li>
+                    <li>Error logging & analysis</li>
+                    <li>Performance monitoring</li>
+                </ul>
+            </div>
+
+            <div class="portal-card" onclick="openPortal('frequency-log/index.html')">
+                <span class="portal-icon">📊</span>
+                <h2 class="portal-title">Frequency Database</h2>
+                <p class="portal-description">
+                    Permanent frequency logging and session management system.
+                </p>
+                <ul class="portal-features">
+                    <li>IndexedDB storage</li>
+                    <li>Session tracking</li>
+                    <li>Export (JSON/CSV)</li>
+                    <li>Search & filtering</li>
+                </ul>
+            </div>
+
+            <div class="portal-card" onclick="openPortal('documentation/TABLE_OF_CONTENTS.md')">
+                <span class="portal-icon">📚</span>
+                <h2 class="portal-title">Documentation</h2>
+                <p class="portal-description">
+                    Complete system documentation, mathematical framework, and API reference.
+                </p>
+                <ul class="portal-features">
+                    <li>System architecture</li>
+                    <li>Mathematical formulas</li>
+                    <li>API documentation</li>
+                    <li>Setup guides</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn" onclick="startFullSystem()">Start Full System</button>
+            <button class="btn secondary" onclick="runSystemCheck()">System Check</button>
+            <button class="btn secondary" onclick="openAllPortals()">Open All Portals</button>
+        </div>
+    </div>
+
+    <div class="connection-status">
+        <div class="status-dot"></div>
+        <span>System Active</span>
+    </div>
+
+    <div class="footer">
+        Cymatics Resonance Lab v1.0 | Precision Frequency Analysis & Pattern Generation
+    </div>
+
+    <script>
+        // Check system components
+        function checkSystemStatus() {
+            // Check for Web Audio API
+            if (window.AudioContext || window.webkitAudioContext) {
+                document.getElementById('audio-status').textContent = 'READY';
+                document.getElementById('audio-status').style.color = '#00ff00';
+            } else {
+                document.getElementById('audio-status').textContent = 'UNAVAILABLE';
+                document.getElementById('audio-status').style.color = '#ff8800';
+                showCompatibilityWarning('Web Audio API not supported. Audio features disabled.');
+            }
+
+            // Check for WebGL
+            const canvas = document.createElement('canvas');
+            const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+            if (gl) {
+                document.getElementById('gpu-status').textContent = 'ENABLED';
+                document.getElementById('gpu-status').style.color = '#00ff00';
+            } else {
+                document.getElementById('gpu-status').textContent = 'DISABLED';
+                document.getElementById('gpu-status').style.color = '#ff8800';
+                showCompatibilityWarning('WebGL not supported. Pattern rendering will use fallback mode.');
+            }
+
+            // Check for IndexedDB
+            if (window.indexedDB) {
+                document.getElementById('db-status').textContent = 'READY';
+                document.getElementById('db-status').style.color = '#00ff00';
+            } else {
+                document.getElementById('db-status').textContent = 'UNAVAILABLE';
+                document.getElementById('db-status').style.color = '#ff8800';
+                showCompatibilityWarning('IndexedDB not supported. Data persistence disabled.');
+            }
+
+            // Check for Float32Array support (for pattern calculations)
+            if (typeof Float32Array === 'undefined') {
+                showCompatibilityWarning('Typed arrays not supported. Performance may be limited.');
+            }
+
+            // Check for Promise support (for async operations)
+            if (typeof Promise === 'undefined') {
+                showCompatibilityWarning('Promises not supported. Some features may not work correctly.');
+            }
+
+            // Check for Ollama (would need actual endpoint check)
+            checkOllamaStatus();
+        }
+
+        async function checkOllamaStatus() {
+            try {
+                const response = await fetch('http://localhost:11434/api/tags', {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                if (response.ok) {
+                    document.getElementById('ai-status').textContent = 'ONLINE';
+                    document.getElementById('ai-status').style.color = '#00ff00';
+                }
+            } catch (e) {
+                document.getElementById('ai-status').textContent = 'OFFLINE';
+                document.getElementById('ai-status').style.color = '#ff8800';
+            }
+        }
+
+        function openPortal(path) {
+            window.open(path, '_blank');
+        }
+
+        function startFullSystem() {
+            // Open main pattern generator
+            openPortal('core/index.html');
+            // Open audio analyzer
+            setTimeout(() => openPortal('audio/audio-capture.html'), 500);
+            alert('Full system starting...\n\n1. Pattern Generator opened\n2. Audio Analyzer opened\n\nConfigure Ollama separately if needed.');
+        }
+
+        function runSystemCheck() {
+            checkSystemStatus();
+            alert('System check complete!\n\nCheck the status bar for component availability.');
+        }
+
+        function openAllPortals() {
+            const portals = [
+                'core/index.html',
+                'audio/audio-capture.html',
+                'ai-agent/pattern-ai.html',
+                'testing/test-runner.html'
+            ];
+            
+            portals.forEach((portal, index) => {
+                setTimeout(() => openPortal(portal), index * 500);
+            });
+        }
+
+        function showCompatibilityWarning(message) {
+            // Create warning notification
+            const warningDiv = document.createElement('div');
+            warningDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: rgba(255, 136, 0, 0.9);
+                color: white;
+                padding: 15px 20px;
+                border-radius: 5px;
+                border: 2px solid #ff8800;
+                font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+                font-size: 12px;
+                z-index: 10000;
+                max-width: 350px;
+                animation: slideIn 0.3s ease;
+            `;
+            warningDiv.innerHTML = `
+                <strong>⚠️ COMPATIBILITY WARNING</strong><br>
+                ${message}
+            `;
+            document.body.appendChild(warningDiv);
+            
+            // Auto-remove after 6 seconds
+            setTimeout(() => {
+                if (document.body.contains(warningDiv)) {
+                    document.body.removeChild(warningDiv);
+                }
+            }, 6000);
+            
+            // Also log to console
+            console.warn('Cymatics Lab Compatibility:', message);
+        }
+
+        // Run system check on load
+        window.addEventListener('load', checkSystemStatus);
+        
+        // Periodic status check
+        setInterval(checkSystemStatus, 30000);
+    </script>
+</body>
+</html>
