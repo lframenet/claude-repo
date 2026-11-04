@@ -1,0 +1,112 @@
+:root {
+  --bg: #ffffff;
+  --bg-soft: #f5f5f4;
+  --bg-softer: #ececea;
+  --fg: #1c1c1e;
+  --fg-soft: #6e6e73;
+  --border: #e2e2e0;
+  --accent: #0a7cff;
+  --titlebar-h: 38px;
+  --toolbar-h: 40px;
+  --statusbar-h: 24px;
+  --ed-bg: #ffffff;
+  --ed-fg: #1c1c1e;
+  color-scheme: light;
+}
+html[data-theme="dark"] {
+  --bg: #1e1e1e;
+  --bg-soft: #262626;
+  --bg-softer: #303030;
+  --fg: #e8e8e8;
+  --fg-soft: #9d9da3;
+  --border: #3a3a3a;
+  --accent: #4da3ff;
+  --ed-bg: #1e1e1e;
+  --ed-fg: #e8e8e8;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  display: flex; flex-direction: column;
+  background: var(--bg); color: var(--fg);
+  font: 13px -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+  overflow: hidden; user-select: none;
+}
+
+#titlebar {
+  height: var(--titlebar-h); flex: 0 0 var(--titlebar-h);
+  -webkit-app-region: drag; no-app-region: drag;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 12px 0 78px; background: var(--bg-soft); border-bottom: 1px solid var(--border);
+}
+#tb-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
+#doc-title { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 55vw; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: transparent; flex: 0 0 8px; }
+.dot.dirty { background: #ff9500; }
+#tb-right { -webkit-app-region: no-drag; }
+#doc-kind { color: var(--fg-soft); font-size: 12px; }
+
+#toolbar {
+  height: var(--toolbar-h); flex: 0 0 var(--toolbar-h);
+  display: flex; align-items: center; gap: 6px; padding: 0 10px;
+  background: var(--bg); border-bottom: 1px solid var(--border);
+}
+#toolbar button {
+  border: 1px solid var(--border); background: var(--bg-soft); color: var(--fg);
+  border-radius: 6px; padding: 4px 10px; font-size: 12px; cursor: default;
+}
+#toolbar button:hover:not(:disabled) { background: var(--bg-softer); }
+#toolbar button:disabled { opacity: 0.4; }
+#toolbar .sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+#toolbar .spacer { flex: 1; }
+#toolbar label { display: flex; align-items: center; gap: 4px; color: var(--fg-soft); font-size: 12px; }
+#toolbar select { font-size: 12px; background: var(--bg-soft); color: var(--fg); border: 1px solid var(--border); border-radius: 6px; padding: 3px 4px; }
+
+#editor-host { flex: 1; position: relative; overflow: hidden; }
+.CodeMirror {
+  position: absolute; inset: 0; height: 100% !important;
+  background: var(--ed-bg); color: var(--ed-fg);
+  font-family: var(--ed-font, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif);
+  font-size: var(--ed-size, 14px);
+}
+.CodeMirror-gutters { background: var(--ed-bg); border-right: 1px solid var(--border); }
+.CodeMirror-linenumber { color: var(--fg-soft); }
+.CodeMirror-cursor { border-left: 2px solid var(--accent); }
+.CodeMirror-selected, .CodeMirror-focused .CodeMirror-selected { background: rgba(10, 124, 255, 0.18); }
+.CodeMirror .CodeMirror-foldgutter { color: var(--fg-soft); }
+html[data-theme="dark"] .CodeMirror { background: #1e1e1e; color: #e8e8e8; }
+html[data-theme="dark"] .CodeMirror-gutters { background: #1e1e1e; border-right-color: #3a3a3a; }
+html[data-theme="dark"] .CodeMirror-linenumber { color: #9d9da3; }
+
+#statusbar {
+  height: var(--statusbar-h); flex: 0 0 var(--statusbar-h);
+  display: flex; justify-content: space-between; align-items: center; padding: 0 10px;
+  background: var(--bg-soft); border-top: 1px solid var(--border);
+  color: var(--fg-soft); font-size: 11px;
+}
+
+#drop-hint {
+  position: fixed; inset: var(--titlebar-h) 0 0 0; z-index: 50;
+  background: rgba(10, 124, 255, 0.12);
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: none;
+}
+.drop-card {
+  border: 2px dashed var(--accent); border-radius: 12px; padding: 28px 48px;
+  font-size: 20px; font-weight: 600; color: var(--accent); background: var(--bg);
+}
+
+#progress {
+  position: fixed; left: 0; right: 0; bottom: var(--statusbar-h); height: 22px; z-index: 40;
+  background: var(--bg-soft); border-top: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px; padding: 0 10px;
+}
+#progress-bar {
+  height: 6px; border-radius: 3px; background: var(--accent); width: 0%;
+  transition: width 0.15s ease;
+}
+#progress-label { font-size: 11px; color: var(--fg-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.CodeMirror-dialog { background: var(--bg-soft); color: var(--fg); font-family: inherit; }
+.CodeMirror-dialog input { border: 1px solid var(--border); background: var(--bg); color: var(--fg); }

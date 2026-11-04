@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' app: data: blob:; script-src 'self' app: blob: 'unsafe-inline'; style-src 'self' app: 'unsafe-inline'; img-src 'self' app: data: blob:; font-src 'self' app: data:; worker-src 'self' app: blob:; child-src 'self' app: blob:">
+<title>Scribe</title>
+<link rel="stylesheet" href="app:vendor/codemirror/lib/codemirror.css">
+<link rel="stylesheet" href="app:vendor/codemirror/theme/material-darker.css">
+<link rel="stylesheet" href="app:vendor/codemirror/theme/one-dark.css">
+<link rel="stylesheet" href="app:vendor/codemirror/theme/dracula.css">
+<link rel="stylesheet" href="app:vendor/codemirror/theme/eclipse.css">
+<link rel="stylesheet" href="app:vendor/codemirror/addon/dialog/dialog.css">
+<link rel="stylesheet" href="app:vendor/codemirror/addon/fold/foldgutter.css">
+<link rel="stylesheet" href="app:style.css">
+</head>
+<body>
+<div id="titlebar">
+  <div id="tb-left">
+    <span id="doc-dot" class="dot" title="Unsaved changes"></span>
+    <span id="doc-title">Untitled</span>
+  </div>
+  <div id="tb-right">
+    <span id="doc-kind"></span>
+  </div>
+</div>
+
+<div id="drop-hint" hidden>
+  <div class="drop-card">Drop file to open</div>
+</div>
+
+<div id="toolbar">
+  <button id="btn-new" title="New (⌘N)">New</button>
+  <button id="btn-open" title="Open… (⌘O)">Open…</button>
+  <span class="sep"></span>
+  <button id="btn-save" title="Save (⌘S)">Save</button>
+  <button id="btn-save-as" title="Save As… (⇧⌘S)">Save As…</button>
+  <span class="sep"></span>
+  <button id="btn-ocr" title="Run OCR on every PDF page" disabled>OCR PDF</button>
+  <button id="btn-reveal" title="Reveal in Finder" disabled>Reveal</button>
+  <span class="spacer"></span>
+  <label id="wrap-label"><input type="checkbox" id="opt-wrap" checked> Wrap</label>
+  <label>Theme
+    <select id="opt-theme">
+      <option value="auto">Auto</option>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
+  </label>
+  <label>Font
+    <select id="opt-font">
+      <option value="ui">System</option>
+      <option value="mono">Monospace</option>
+      <option value="serif">Serif</option>
+    </select>
+  </label>
+  <label>Size
+    <select id="opt-size">
+      <option>12</option><option>13</option><option selected>14</option><option>15</option><option>16</option><option>18</option>
+    </select>
+  </label>
+</div>
+
+<div id="statusbar">
+  <span id="st-left">Ready</span>
+  <span id="st-right"><span id="st-pos">Ln 1, Col 1</span> · <span id="st-count">0 chars</span> · <span id="st-enc">UTF-8</span></span>
+</div>
+
+<div id="editor-host"><textarea id="editor"></textarea></div>
+<div id="progress" hidden><div id="progress-bar"></div><span id="progress-label"></span></div>
+
+<script src="app:vendor/codemirror/lib/codemirror.js"></script>
+<script src="app:vendor/codemirror/addon/mode/loadmode.js"></script>
+<script src="app:vendor/codemirror/addon/mode/multiplex.js"></script>
+<script src="app:vendor/codemirror/addon/mode/overlay.js"></script>
+<script src="app:vendor/codemirror/addon/mode/simple.js"></script>
+<script src="app:vendor/codemirror/addon/dialog/dialog.js"></script>
+<script src="app:vendor/codemirror/addon/search/searchcursor.js"></script>
+<script src="app:vendor/codemirror/addon/search/search.js"></script>
+<script src="app:vendor/codemirror/addon/search/jump-to-line.js"></script>
+<script src="app:vendor/codemirror/addon/search/match-highlighter.js"></script>
+<script src="app:vendor/codemirror/addon/edit/matchbrackets.js"></script>
+<script src="app:vendor/codemirror/addon/edit/closebrackets.js"></script>
+<script src="app:vendor/codemirror/addon/comment/comment.js"></script>
+<script src="app:vendor/codemirror/addon/fold/foldcode.js"></script>
+<script src="app:vendor/codemirror/addon/fold/foldgutter.js"></script>
+<script src="app:vendor/codemirror/addon/fold/brace-fold.js"></script>
+<script src="app:vendor/codemirror/addon/fold/indent-fold.js"></script>
+<script src="app:vendor/codemirror/keymap/sublime.js"></script>
+<script src="app:vendor/pdfjs/pdf.min.mjs" type="module"></script>
+<script src="app:vendor/mammoth.browser.min.js"></script>
+<script src="app:app.js" type="module"></script>
+</body>
+</html>

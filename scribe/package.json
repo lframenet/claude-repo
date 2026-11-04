@@ -1,0 +1,22 @@
+{
+  "name": "scribe",
+  "productName": "Scribe",
+  "version": "1.0.0",
+  "description": "Clean notepad-style reader/editor for text, code, PDF (with OCR), DOCX, RTF and more",
+  "main": "src/main.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "pack:mac": "node build/make-mac-app.mjs"
+  },
+  "dependencies": {
+    "codemirror": "5.65.18",
+    "mammoth": "1.9.1",
+    "pdfjs-dist": "4.2.67",
+    "tesseract.js": "5.1.1",
+    "tesseract.js-core": "5.1.1"
+  },
+  "devDependencies": {
+    "electron": "45.2.0"
+  }
+}
